@@ -1,0 +1,31 @@
+<div class="row justify-content-center">
+    <h2 class="text-center">Add New Contact</h2>
+
+    <div class="col-md-6 mt-2">
+        <% if (typeof errors != 'undefined') { %>
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    <% errors.forEach(error => { %>
+                        <li><%= error.msg %></li>
+                    <% }); %>
+                </ul>
+            </div>
+        <% } %>
+
+        <form method="post" action="/contact" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="nama" class="form-label">Nama</label>
+                <input type="text" class="form-control" id="nama" name="nama" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="ponsel" class="form-label">No Handphone</label>
+                <input type="text" class="form-control" id="ponsel" name="ponsel" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>

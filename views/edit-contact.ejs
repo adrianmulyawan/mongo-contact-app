@@ -1,0 +1,32 @@
+<div class="row justify-content-center">
+    <h2 class="text-center">Edit Contact</h2>
+
+    <div class="col-md-6 mt-2">
+        <% if (typeof errors != 'undefined') { %>
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    <% errors.forEach(error => { %>
+                        <li><%= error.msg %></li>
+                    <% }); %>
+                </ul>
+            </div>
+        <% } %>
+
+        <form method="post" action="/contact/update" enctype="multipart/form-data">
+            <input type="hidden" name="oldNama" value="<%= (contact.oldNama) ?  contact.oldNama : contact.nama %>">
+            <div class="mb-3">
+                <label for="nama" class="form-label">Nama</label>
+                <input type="text" class="form-control" id="nama" name="nama" value="<%= contact.nama %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="<%= contact.email %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="ponsel" class="form-label">No Handphone</label>
+                <input type="text" class="form-control" id="ponsel" name="ponsel" value="<%= contact.ponsel %>" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Ubah Data</button>
+        </form>
+    </div>
+</div>
