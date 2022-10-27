@@ -27,32 +27,41 @@ app.use(upload.array());
 // # Routing
 // > Halaman Home 
 app.get('/', (req, res) => {
-    // > Gunakan Templating Engine EJS 
-    const mahasiswa = [
-        {
-            nama: "Adrian Mulyawan",
-            email: "adrianmulyawan666@gmail.com"
-        },
-        {
-            nama: "Mandalika Ayusti",
-            email: "manda.pumkins@gmail.com"
-        },
-        {
-            nama: "Akbar Suseno",
-            email: "akbarsuseno@gmail.com"
-        },
-    ];
+	// > Gunakan Templating Engine EJS 
+	const mahasiswa = [
+		{
+			nama: "Adrian Mulyawan",
+			email: "adrianmulyawan666@gmail.com"
+		},
+		{
+			nama: "Mandalika Ayusti",
+			email: "manda.pumkins@gmail.com"
+		},
+		{
+			nama: "Akbar Suseno",
+			email: "akbarsuseno@gmail.com"
+		},
+	];
 
-    // > Kita bisa kirim data kedalam halaman html-nya 
-    // => dengan memberikan object di parameter ke-2 method res.render
-    res.render('index', {
-        layout: 'partials/main-layout',
-        nama: 'Adrian Mulyawan',
-        title: 'Home',
-        mahasiswa: mahasiswa,
-    });
+	// > Kita bisa kirim data kedalam halaman html-nya 
+	// => dengan memberikan object di parameter ke-2 method res.render
+	res.render('index', {
+		layout: 'partials/main-layout',
+		nama: 'Adrian Mulyawan',
+		title: 'Home',
+		mahasiswa: mahasiswa,
+	});
+});
+
+// > Halaman About
+app.get('/about', (req, res) => {
+	// > Gunakan Templating Engine EJS 
+	res.render('about', {
+		layout: 'partials/main-layout',
+		title: 'About',
+	});
 });
 
 app.listen(port, () => {
-    console.info(`Mongo Contact App || Listening at http://localhost:${port}`);
+	console.info(`Mongo Contact App || Listening at http://localhost:${port}`);
 });
