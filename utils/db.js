@@ -4,23 +4,6 @@ const mongoose = require('mongoose');
 // # Konek ke MongoDB 
 mongoose.connect('mongodb://localhost:27017/adrian-db');
 
-// # Membuat Schema 
-// => Struktur DB: Table Contact
-const Contact = mongoose.model('Contact', {
-	nama: {
-		type: String,
-		required: true,
-	},
-	email: {
-		type: String,
-		required: true,
-	},
-	ponsel: {
-		type: String,
-		require: true,
-	}
-});
-
 // Tambah Data Kedalam Table Contact
 // const contact1 = new Contact({
 // 	nama: "Mandalika Ayusti",
