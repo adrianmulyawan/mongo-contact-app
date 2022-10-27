@@ -62,6 +62,20 @@ app.get('/about', (req, res) => {
 	});
 });
 
+// > Halaman Contact
+app.get('/contact', (req, res) => {
+	// Menampung seluruh contacts (from data/contacts.json)
+	const contacts = loadContacts();
+
+	// > Gunakan Templating Engine EJS 
+	res.render('contact', {
+		layout: 'partials/main-layout',
+		title: 'Contact',
+		contacts: contacts,
+		msg: req.flash('msg'), // tangkap flash message
+	});
+});
+
 app.listen(port, () => {
 	console.info(`Mongo Contact App || Listening at http://localhost:${port}`);
 });
