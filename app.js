@@ -2,6 +2,10 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const multer = require('multer');
+// Import Koneksi ke MongoDB
+require('./utils/db');
+// Import Model Contact 
+const Contact = require('./model/contact');
 
 // # Setup Express
 // > Jalankan Express
@@ -63,11 +67,11 @@ app.get('/about', (req, res) => {
 });
 
 // > Halaman Contact
-app.get('/contact', (req, res) => {
-	// Menampung seluruh contacts (from data/contacts.json)
-	const contacts = loadContacts();
+app.get('/contact', async (req, res) => {
+	// Menampung seluruh contacts (from database)
+	const contacts = await Contact.find();
 
-	// > Gunakan Templating Engine EJS 
+	// Gunakan Templating Engine EJS 
 	res.render('contact', {
 		layout: 'partials/main-layout',
 		title: 'Contact',
