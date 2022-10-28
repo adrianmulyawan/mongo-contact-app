@@ -5,6 +5,7 @@ const multer = require('multer');
 const session = require('express-session');
 const cookieParser = require('cookie-parser')
 const flash = require('connect-flash');
+const { body, validationResult, check } = require('express-validator');
 // Import Koneksi ke MongoDB
 require('./utils/db');
 // Import Model Contact 
@@ -94,6 +95,50 @@ app.get('/contact', async (req, res) => {
 		contacts: contacts,
 		msg: req.flash('msg'), // tangkap flash message
 	});
+});
+
+// => Halaman Tambah Data Contact 
+app.get('/contact/add', (req,res) => {
+	res.render('add-contact', {
+		layout: 'partials/main-layout',
+		title: 'Add New Contact',
+	})
+});
+// => Proses Tambah Data Contact
+app.post('/contact', [
+	// Validation => using express-validator
+	// > Custom Validation
+	body('nama').custom(async (value) => {
+		const duplicate = await Contact.findOne({ nama: value });
+		if (duplicate) {
+				throw new Error('Nama Kontak Telah Terdaftar');
+		}
+		return true;
+	}),
+	// > Validation Email
+	check('email', 'Email Tidak Valid').isEmail(),
+	// > Validation Phone Number
+	check('ponsel', 'No Handphone Tidak Valid').isMobilePhone('id-ID'),
+], (req, res) => {
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		// return res.status(400).json({ errors: error.array() });
+		res.render('add-contact', {
+			layout: 'partials/main-layout',
+			title: 'Add New Contact',
+			errors: errors.array(),
+		});
+	} else {
+		// req.body => mengambil data dari inputan form
+		Contact.insertMany(req.body, (error, result) => {
+			// Kirim flash message
+			req.flash('msg', 'Data Kontak Berhasil Ditambahkan');
+
+			// Setelah berhasil simpan data kontak kita redirect
+			// redirect kehalaman /contact
+			res.redirect('/contact');
+		});
+	}
 });
 
 // => Halaman Detail Contact
