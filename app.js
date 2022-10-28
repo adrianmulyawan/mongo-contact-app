@@ -18,6 +18,9 @@ const app = express();
 // > Set Port Express
 const port = 3000;
 
+// # Setup Method Override
+app.use(methodOverride('_method'));
+
 // # Setup Multer
 const upload = multer();
 
@@ -44,9 +47,6 @@ app.use(
     })
 );
 app.use(flash());
-
-// # Setup Method Override 
-app.use(methodOverride('_method'));
 
 // # Routing
 // > Halaman Home 
@@ -143,6 +143,20 @@ app.post('/contact', [
 			res.redirect('/contact');
 		});
 	}
+});
+
+// => Proses Hapus Data Contact
+app.delete('/contact/:nama', (req, res) => {
+	// res.send(req.body);
+	// console.info(req.params.nama);
+	Contact.deleteOne({ nama: req.params.nama }).then((result) => {
+		// Kirim flash message
+		req.flash('msg', 'Data Kontak Berhasil Dihapus');
+
+		// Setelah berhasil simpan data kontak kita redirect
+		// redirect kehalaman /contact
+		res.redirect('/contact');
+	});
 });
 
 // => Halaman Detail Contact
