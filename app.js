@@ -6,6 +6,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser')
 const flash = require('connect-flash');
 const { body, validationResult, check } = require('express-validator');
+const methodOverride = require('method-override');
 // Import Koneksi ke MongoDB
 require('./utils/db');
 // Import Model Contact 
@@ -43,6 +44,9 @@ app.use(
     })
 );
 app.use(flash());
+
+// # Setup Method Override 
+app.use(methodOverride('_method'));
 
 // # Routing
 // > Halaman Home 
