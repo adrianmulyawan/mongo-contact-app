@@ -2,6 +2,9 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const multer = require('multer');
+const session = require('express-session');
+const cookieParser = require('cookie-parser')
+const flash = require('connect-flash');
 // Import Koneksi ke MongoDB
 require('./utils/db');
 // Import Model Contact 
@@ -27,6 +30,18 @@ app.use(express.static('public'));
 // > Midlleware Menangkap Data Dari Inputan Form (url encoded)
 // app.use(express.urlencoded({ extended: true }));
 app.use(upload.array());
+
+// # Setup Flash Message
+app.use(cookieParser('secret'));
+app.use(
+    session({
+        cookie: { maxAge: 6000 },
+        secret: 'secret',
+        resave: true,
+        saveUninitialized: true,
+    })
+);
+app.use(flash());
 
 // # Routing
 // > Halaman Home 
