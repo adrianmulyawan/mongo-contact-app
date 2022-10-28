@@ -82,6 +82,7 @@ app.get('/about', (req, res) => {
 });
 
 // > Halaman Contact
+// => Halaman Utama Contact
 app.get('/contact', async (req, res) => {
 	// Menampung seluruh contacts (from database)
 	const contacts = await Contact.find();
@@ -92,6 +93,18 @@ app.get('/contact', async (req, res) => {
 		title: 'Contact',
 		contacts: contacts,
 		msg: req.flash('msg'), // tangkap flash message
+	});
+});
+
+// => Halaman Detail Contact
+app.get('/contact/:nama', async (req, res) => {
+	// const contact = findContact(req.params.nama);
+	const contact = await Contact.findOne({ nama: req.params.nama });
+
+	res.render('detail',{
+			layout: 'partials/main-layout',
+			title: 'Detail Contact',
+			contact,
 	});
 });
 
