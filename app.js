@@ -147,9 +147,9 @@ app.get('/contact/:nama', async (req, res) => {
 	const contact = await Contact.findOne({ nama: req.params.nama });
 
 	res.render('detail',{
-			layout: 'partials/main-layout',
-			title: 'Detail Contact',
-			contact,
+		layout: 'partials/main-layout',
+		title: 'Detail Contact',
+		contact,
 	});
 });
 
